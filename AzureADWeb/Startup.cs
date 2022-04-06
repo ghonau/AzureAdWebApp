@@ -26,6 +26,8 @@ namespace AzureADWeb
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddHttpClient(); 
+
             //Application / Client ID:b41ac501-c1cf-4769-8fc4-2c788b5b06ad
             //Auth Endpoint: https://login.microsoftonline.com/5888eec5-31a9-4245-bb85-c75f3b41aa24/oauth2/v2.0/authorize
             services.AddControllersWithViews();
@@ -41,7 +43,12 @@ namespace AzureADWeb
                 options.ClientId = "b41ac501-c1cf-4769-8fc4-2c788b5b06ad";
                 options.ResponseType = "code";
                 options.ClientSecret = "eIi7Q~y2Idik~n8vE0jQRzVjIyhPmBat3-YnO";
+                options.Scope.Add("api://1890dca2-0b03-4f82-b048-889f9da2a63d/AdminAccess");
                 options.SaveTokens = true;
+                options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                {
+                    NameClaimType = "name"
+                };
             });
         }
 
